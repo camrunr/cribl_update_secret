@@ -105,7 +105,7 @@ def patch_secret(leader,group,token, sid, sv):
     if (r.status_code == 200):
         return(r)
     else:
-        print("PATCH failed with returned status {}\nexiting!".format(r.status_code))
+        print("PATCH secret failed with returned status {}\nexiting!".format(r.status_code))
         sys.exit(1)
 
 #############################
@@ -121,7 +121,7 @@ def commit(leader, group, token, msg):
     if (r.status_code == 200):
         return(r)
     else:
-        print("PATCH failed with returned status {}\nexiting!".format(r.status_code))
+        print("PATCH commit failed with returned status {}\nexiting!".format(r.status_code))
         print("details:\nurl: {}\nheaders: {}\ndata: {}\n".format(url,header,json.dumps(data)))
         sys.exit(1)
 
@@ -134,7 +134,13 @@ def deploy(leader, group, token, commit_id):
     r = requests.patch(url,headers=header,data=json.dumps(data))
     debug_log("PATCHing to: " + url)
     debug_log("with data: " + json.dumps(data))
-    return(r)
+    
+    if (r.status_code == 200):
+        return(r)
+    else:
+        print("PATCH deploy failed with returned status {}\nexiting!".format(r.status_code))
+        print("details:\nurl: {}\nheaders: {}\ndata: {}\n".format(url,header,json.dumps(data)))
+        sys.exit(1)
 
 
 #############################
@@ -163,7 +169,7 @@ if __name__ == "__main__":
     
     # deploy
     debug_log("deploy the changes from " + commit_id)
-    results = commit(args.leader, args.group, bearer_token,commit_id)
+    results = deploy(args.leader, args.group, bearer_token,commit_id)
     debug_log(results.status_code)
     debug_log(results.text)
     
