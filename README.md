@@ -1,4 +1,4 @@
-This script allows you to update secrets in Cribl via the API. As of this first release, it only applies to a username/passord style secret, found under Group Settings -> Security -> Secrets.
+This script allows you to update secrets in Cribl via the API. As of this first release, it only applies to a username/password style secret. Secrets are found under Group Settings -> Security -> Secrets.
 
 Usage:   
     `cribl_update_secret.py [-h] [-D] -l LEADER -g GROUP -s SECRETID -S SECRETVALUE -u USERNAME [-P PASSWORD]`
